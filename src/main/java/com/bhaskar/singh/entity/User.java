@@ -1,18 +1,16 @@
 package com.bhaskar.singh.entity;
 
+import com.bhaskar.singh.domain.security.Authority;
+import com.bhaskar.singh.domain.security.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.*;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.bhaskar.singh.domain.security.Authority;
-import com.bhaskar.singh.domain.security.UserRole;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
@@ -41,6 +39,7 @@ public class User implements UserDetails, Serializable {
 	private boolean enabled = true;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JsonIgnore is used to break recursion of records like a{b{a{b}}}
 	@JsonIgnore
 	private Set<UserRole> userRoles = new HashSet<>();
 	
