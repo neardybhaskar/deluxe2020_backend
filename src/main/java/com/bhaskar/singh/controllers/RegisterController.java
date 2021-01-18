@@ -36,7 +36,7 @@ public class RegisterController {
 		String password = mapper.get("password");
 		
 		if(userService.findByEmail(email) != null) {
-			return new ResponseEntity("emailExists",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity("emailExists",HttpStatus.CONFLICT);
 		}
 		
 		User user = new User();

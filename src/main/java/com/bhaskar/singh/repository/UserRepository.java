@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.bhaskar.singh.entity.User;
 
-@CrossOrigin
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 	
