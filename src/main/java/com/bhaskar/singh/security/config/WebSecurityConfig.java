@@ -32,7 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			"/userLogout",
 			"/registerUser",
 			"/users",
-            "/products/**"
+            "/products/**",
+			"/productCategories/**"
 	};
 	 
 	@Override
