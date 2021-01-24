@@ -33,9 +33,7 @@ public class UserServiceImpl implements UserService {
 		if(localUser != null) {
 			LOG.info("User with email {} already exist ",user.getEmail());
 		} else {
-			for (UserRole userRole : userRoles) {
-				roleRepository.save(userRole.getRole());
-			}
+			userRoles.forEach(userRole -> roleRepository.save(userRole.getRole()) );
 			user.getUserRoles().addAll(userRoles);
 			
 			localUser = userRepository.save(user);

@@ -14,7 +14,6 @@ import java.util.Optional;
  * @author Bhaskar on 16-01-2021
  */
 @Repository
-@CrossOrigin("http://localhost:4200")
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
     Optional<Product> findById(@RequestParam("id") Long id);
