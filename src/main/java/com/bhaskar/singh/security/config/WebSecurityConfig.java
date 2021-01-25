@@ -26,14 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			"/css/**",
 			"/js/**",
 			"/image/**",
-			"/book/**",
-			"/user/**",
-			"/checkSession",
-			"/userLogout",
-			"/registerUser",
-			"/users",
-            "/products/**",
-			"/productCategories/**"
+			"/userLogout"
 	};
 	 
 	@Override
