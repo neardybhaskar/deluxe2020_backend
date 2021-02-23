@@ -26,14 +26,7 @@ public class LoginController {
 
 	@GetMapping("/token")
 	public Map<String, String> token(HttpSession httpSession, HttpServletRequest request) {
-		System.out.println(request.getRemoteHost());
-		
-		String remoteHost = request.getRemoteHost();
-		int portNumber = request.getRemotePort();
-		
-		System.out.println(remoteHost+" "+portNumber);
-		System.out.println(request.getRemoteAddr());
-		
+
 		return Collections.singletonMap("token", httpSession.getId());
 	}
 	
