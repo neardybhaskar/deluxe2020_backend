@@ -21,7 +21,7 @@ import java.util.Set;
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public MyDataRestConfig(EntityManager theEntityManager) {

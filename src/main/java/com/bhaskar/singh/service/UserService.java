@@ -1,11 +1,10 @@
 package com.bhaskar.singh.service;
 
-import java.util.Set;
-
-import org.springframework.stereotype.Service;
-
 import com.bhaskar.singh.domain.security.UserRole;
 import com.bhaskar.singh.entity.User;
+import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public interface UserService {

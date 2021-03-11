@@ -1,10 +1,8 @@
 package com.bhaskar.singh.repository;
 
+import com.bhaskar.singh.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
-import com.bhaskar.singh.entity.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {

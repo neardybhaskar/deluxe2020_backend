@@ -1,6 +1,7 @@
 package com.bhaskar.singh.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,9 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	@Autowired
-	private UserDetailsService userDetailsService;
+
+	private final UserDetailsService userDetailsService;
+
+	public WebSecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -26,7 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			"/css/**",
 			"/js/**",
 			"/image/**",
-			"/userLogout"
+			"/userLogout",
+			"/registerUser"
 	};
 	 
 	@Override

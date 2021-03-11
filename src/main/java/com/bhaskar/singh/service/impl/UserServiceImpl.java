@@ -1,49 +1,48 @@
 package com.bhaskar.singh.service.impl;
 
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.bhaskar.singh.domain.security.UserRole;
 import com.bhaskar.singh.entity.User;
 import com.bhaskar.singh.repository.RoleRepository;
 import com.bhaskar.singh.repository.UserRepository;
 import com.bhaskar.singh.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 	
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 	
-	@Autowired
-	private RoleRepository roleRepository;
+	private final RoleRepository roleRepository;
+
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+	}
 
 	@Override
 	public User createUser(User user, Set<UserRole> userRoles) {
-		User localUser = userRepository.findByEmail(user.getEmail());
+		User localUser = this.userRepository.findByEmail(user.getEmail());
 		
 		if(localUser != null) {
 			LOG.info("User with email {} already exist ",user.getEmail());
 		} else {
-			userRoles.forEach(userRole -> roleRepository.save(userRole.getRole()) );
+			userRoles.forEach(userRole -> this.roleRepository.save(userRole.getRole()) );
 			user.getUserRoles().addAll(userRoles);
 			
-			localUser = userRepository.save(user);
+			localUser = this.userRepository.save(user);
 		}
 		return localUser;
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
+		return this.userRepository.findByEmail(email);
 	}
 
 }
