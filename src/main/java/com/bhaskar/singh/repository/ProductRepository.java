@@ -3,7 +3,7 @@ package com.bhaskar.singh.repository;
 import com.bhaskar.singh.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
  * @author Bhaskar on 16-01-2021
  */
 @Repository
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findById(@RequestParam("id") Long id);
 
