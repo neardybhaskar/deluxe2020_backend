@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+D:\Bhaskar\Others\Side Project\Deluxe2020\Deluxe2020_backend\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1704295390.index
+1647432349.index
+2561364392.index
+76242788.index
+1068448098.index
+2299323646.index

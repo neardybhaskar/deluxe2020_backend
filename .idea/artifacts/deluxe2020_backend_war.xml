@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="deluxe2020_backend:war">
+    <output-path>$PROJECT_DIR$/deluxe2020_backend/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>deluxe2020_backend</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="deluxe2020_backend-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="deluxe2020_backend:war exploded" />
+    </root>
+  </artifact>
+</component>
