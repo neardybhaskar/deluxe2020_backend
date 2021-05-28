@@ -9,7 +9,7 @@ import java.util.Set;
 @Service
 public interface UserService {
 	
-	 User createUser(User user, Set<UserRole> userRoles);
+	 void createUser(User user, Set<UserRole> userRoles);
 	 
 	 User findByEmail(String username);
 

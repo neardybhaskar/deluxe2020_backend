@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User createUser(User user, Set<UserRole> userRoles) {
+	public void createUser(User user, Set<UserRole> userRoles) {
 		User localUser = this.userRepository.findByEmail(user.getEmail());
 		
 		if(localUser != null) {
@@ -34,10 +34,8 @@ public class UserServiceImpl implements UserService {
 		} else {
 			userRoles.forEach(userRole -> this.roleRepository.save(userRole.getRole()) );
 			user.getUserRoles().addAll(userRoles);
-			
-			localUser = this.userRepository.save(user);
+			this.userRepository.save(user);
 		}
-		return localUser;
 	}
 
 	@Override
