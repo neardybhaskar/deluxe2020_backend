@@ -1,24 +1,40 @@
 package com.bhaskar.singh.controllers;
 
+import com.bhaskar.singh.domain.security.UserRole;
+import com.bhaskar.singh.entity.User;
+import com.bhaskar.singh.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class LoginController {
 
-	@GetMapping("/token")
-	public Map<String, String> token(HttpSession httpSession) {
+	private final UserService userService;
 
-		return Collections.singletonMap("token", httpSession.getId());
+	public LoginController(UserService userService) {
+		this.userService = userService;
+	}
+
+	@GetMapping("{username}/token")
+	public Map<String, String> token(HttpSession httpSession,
+									 @PathVariable("username") String username) {
+		User user = userService.findByEmail(username);
+		String roleName = null;
+		for (UserRole userRole: user.getUserRoles()) {
+			roleName = userRole.getRole().getName();
+		}
+
+		Map<String, String> token = new HashMap<>();
+		token.put("token", httpSession.getId());
+		token.put("userRole", roleName);
+
+		return token;
 	}
 	
 	@RequestMapping(value = "/checkSession")
