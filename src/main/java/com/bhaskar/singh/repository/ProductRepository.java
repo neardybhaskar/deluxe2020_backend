@@ -23,4 +23,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //    To fetch list of records as per category_id, used when list of particular product is required
     Page<Product> findByProductCategoryId(Long category_id, Pageable pageable);
 
+    Product findByName(String productName);
+
 }

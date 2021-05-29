@@ -6,7 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * @author Bhaskar on 16-01-2021
@@ -48,11 +48,11 @@ public class Product {
 
     @Column(name = "date_created")
     @CreationTimestamp
-    private Date dateCreated;
+    private LocalDate dateCreated;
 
     @Column(name = "last_updated")
     @UpdateTimestamp
-    private Date lastUpdated;
+    private LocalDate lastUpdated;
 
     public Long getId() {
         return id;
@@ -126,19 +126,19 @@ public class Product {
         this.unitsInStock = unitsInStock;
     }
 
-    public Date getDateCreated() {
+    public LocalDate getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDate dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public Date getLastUpdated() {
+    public LocalDate getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(LocalDate lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 }
