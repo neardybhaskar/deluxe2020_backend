@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] PUBLIC_MATCHES = {
 			"/css/**",
 			"/js/**",
-			"/image/**",
+			"/images/**",
 			"/userLogout",
 			"/registerUser"
 	};

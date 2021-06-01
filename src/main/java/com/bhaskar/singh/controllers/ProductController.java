@@ -6,16 +6,17 @@ import com.bhaskar.singh.service.ProductCategoryService;
 import com.bhaskar.singh.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Bhaskar on 17-01-2021
@@ -33,7 +34,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-    public ResponseEntity<?> addProduct(@RequestBody HashMap<String, String> map) {
+    public Object addProduct(@RequestBody HashMap<String, String> map) {
 
         String productName = map.get("productName");
         String addedDate = map.get("addedDate");
@@ -61,9 +62,57 @@ public class ProductController {
         product.setUnitPrice(BigDecimal.valueOf(productCost));
         product.setUnitsInStock(productQuantiy);
 
-        productService.addProduct(product);
+        Product temp = productService.addProduct(product);
+        Map<String, Long> hashMap = new HashMap<>();
+        hashMap.put("id", temp.getId());
+        hashMap.put("productCategoryId", temp.getProductCategory().getId());
+        return hashMap;
+    }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+    //Upload product image
+    @RequestMapping(value = "/upload/image/{productId}/{productCategoryId}", method = RequestMethod.POST)
+    public ResponseEntity<?> uploadImage(@PathVariable("productId") Long productId,
+                              @PathVariable("productCategoryId") Long productCategoryId,
+                              HttpServletRequest request) {
+
+        Optional<Product> product = productService.findById(productId);
+        if(!product.isPresent()) {
+            throw new NoSuchElementException();
+        }
+        try {
+            MultipartHttpServletRequest multipartHttpServletRequest = null;
+            if((request instanceof MultipartHttpServletRequest) == false) {
+                return new ResponseEntity<>("Problems while Uploading", HttpStatus.BAD_REQUEST);
+            }
+
+            multipartHttpServletRequest = (MultipartHttpServletRequest)(request);
+            Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+            String fileName = null;
+            while(iterator.hasNext()) {
+                fileName = iterator.next();
+            }
+
+            String imageName = productId+".jpg";
+            MultipartFile multipartFile = multipartHttpServletRequest.getFile(fileName);
+            byte[] bytes = multipartFile.getBytes();
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream
+                    (new FileOutputStream(new File("src/main/resources/static/images/product/"
+                            +imageName)));
+            bufferedOutputStream.write(bytes);
+            bufferedOutputStream.close();
+
+            product.get().setImageUrl(imageName);
+            productService.updateImage(productId,imageName);
+
+            return new ResponseEntity<>("Uploaded Successfully", HttpStatus.OK);
+
+        } catch (Exception exception) {
+
+            exception.getStackTrace();
+            return new ResponseEntity<>("Problems while Uploading", HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 
 }
