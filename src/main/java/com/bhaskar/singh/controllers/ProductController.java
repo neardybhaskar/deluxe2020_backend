@@ -105,14 +105,32 @@ public class ProductController {
             productService.updateImage(productId,imageName);
 
             return new ResponseEntity<>("Uploaded Successfully", HttpStatus.OK);
-
         } catch (Exception exception) {
-
             exception.getStackTrace();
             return new ResponseEntity<>("Problems while Uploading", HttpStatus.BAD_REQUEST);
         }
-
-
     }
+
+    @RequestMapping(value = "/product/productCategoryName/{productId}", method = RequestMethod.GET)
+    public Map<String, Object> getProductDetailsWithCategoryName(@PathVariable(name = "productId") long productId) {
+        Optional<Product> productOptional = productService.findById(productId);
+        if(!productOptional.isPresent()) {
+            throw new NoSuchElementException();
+        }
+        Product product = productOptional.get();
+        Map<String, Object> map = new HashMap<>();
+        map.put("product", product);
+
+        //Fetching product and productCategoryName together to the ui
+        Optional<ProductCategory> productCategoryOptional = productCategoryService.
+                getProductCategory(product.getProductCategory().getId());
+        if(!productCategoryOptional.isPresent()) {
+            throw new NoSuchElementException();
+        }
+        ProductCategory productCategory = productCategoryOptional.get();
+        map.put("productCategory", productCategory);
+        return map;
+    }
+
 
 }
