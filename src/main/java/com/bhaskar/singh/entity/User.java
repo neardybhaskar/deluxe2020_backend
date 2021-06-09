@@ -42,6 +42,9 @@ public class User implements UserDetails, Serializable {
 //	@JsonIgnore is used to break recursion of records like a{b{a{b}}}
 	@JsonIgnore
 	private Set<UserRole> userRoles = new HashSet<>();
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private ShoppingCart shoppingCart;
 	
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
@@ -138,5 +141,13 @@ public class User implements UserDetails, Serializable {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
 	}
 }

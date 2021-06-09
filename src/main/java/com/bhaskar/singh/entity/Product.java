@@ -54,6 +54,9 @@ public class Product {
     @UpdateTimestamp
     private LocalDate lastUpdated;
 
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CartItem cartItem;
+
     public Long getId() {
         return id;
     }
@@ -140,5 +143,13 @@ public class Product {
 
     public void setLastUpdated(LocalDate lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public CartItem getCartItem() {
+        return cartItem;
+    }
+
+    public void setCartItem(CartItem cartItem) {
+        this.cartItem = cartItem;
     }
 }

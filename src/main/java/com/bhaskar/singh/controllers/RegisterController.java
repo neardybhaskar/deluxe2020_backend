@@ -2,6 +2,7 @@ package com.bhaskar.singh.controllers;
 
 import com.bhaskar.singh.domain.security.Role;
 import com.bhaskar.singh.domain.security.UserRole;
+import com.bhaskar.singh.entity.ShoppingCart;
 import com.bhaskar.singh.entity.User;
 import com.bhaskar.singh.security.config.SecurityUtility;
 import com.bhaskar.singh.service.UserService;
@@ -45,6 +46,10 @@ public class RegisterController {
 			user.setLastName(lastName);
 			user.setEmail(email);
 			user.setPassword(SecurityUtility.passwordEncoder().encode(password));
+
+			ShoppingCart shoppingCart = new ShoppingCart();
+			shoppingCart.setUser(user);
+			user.setShoppingCart(shoppingCart);
 
 			Role role = new Role();
 			role.setId(1L);

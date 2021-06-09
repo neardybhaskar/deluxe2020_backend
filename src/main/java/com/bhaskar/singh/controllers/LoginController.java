@@ -33,6 +33,7 @@ public class LoginController {
 		Map<String, String> token = new HashMap<>();
 		token.put("token", httpSession.getId());
 		token.put("userRole", roleName);
+		token.put("userId", user.getId().toString());
 
 		return token;
 	}
