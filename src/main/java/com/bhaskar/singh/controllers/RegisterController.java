@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,6 +50,7 @@ public class RegisterController {
 
 			ShoppingCart shoppingCart = new ShoppingCart();
 			shoppingCart.setUser(user);
+			shoppingCart.setGrandTotal(new BigDecimal(0));
 			user.setShoppingCart(shoppingCart);
 
 			Role role = new Role();
