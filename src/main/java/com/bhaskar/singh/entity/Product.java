@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author Bhaskar on 16-01-2021
@@ -54,8 +55,9 @@ public class Product {
     @UpdateTimestamp
     private LocalDate lastUpdated;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private CartItem cartItem;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<CartItem> cartItem;
 
     public Long getId() {
         return id;
@@ -145,11 +147,11 @@ public class Product {
         this.lastUpdated = lastUpdated;
     }
 
-    public CartItem getCartItem() {
+    public List<CartItem> getCartItem() {
         return cartItem;
     }
 
-    public void setCartItem(CartItem cartItem) {
+    public void setCartItem(List<CartItem> cartItem) {
         this.cartItem = cartItem;
     }
 }

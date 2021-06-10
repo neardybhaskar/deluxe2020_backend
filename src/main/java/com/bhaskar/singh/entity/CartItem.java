@@ -25,7 +25,7 @@ public class CartItem {
     @Column(name = "grand_total")
     private BigDecimal grandTotal;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
@@ -74,4 +74,5 @@ public class CartItem {
     public void setShoppingCart(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
+
 }

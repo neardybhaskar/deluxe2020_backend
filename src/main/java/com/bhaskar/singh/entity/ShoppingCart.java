@@ -29,6 +29,7 @@ public class ShoppingCart {
     private User user;
 
     @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<CartItem> cartItem;
 
     public Long getId() {
