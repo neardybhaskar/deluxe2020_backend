@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -43,4 +44,9 @@ public class UserServiceImpl implements UserService {
 		return this.userRepository.findByEmail(email);
 	}
 
+	@Override
+	public User findById(long id) {
+		Optional<User> optionalUser = this.userRepository.findById(id);
+		return optionalUser.get();
+	}
 }
