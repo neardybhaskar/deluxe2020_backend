@@ -85,6 +85,19 @@ public class CartItemServiceImpl implements CartItemService {
         return cartItem;
     }
 
+    @Override
+    public Optional<CartItem> findCartItemById(Long cartItemId) {
+        return this.cartItemRepository.findById(cartItemId);
+    }
+
+    @Override
+    public void deleteCartItem(CartItem cartItem) {
+        ShoppingCart shoppingCart = cartItem.getShoppingCart();
+        shoppingCart.setGrandTotal(shoppingCart.getGrandTotal().subtract(cartItem.getGrandTotal()));
+        shoppingCartRepository.save(shoppingCart);
+        cartItemRepository.delete(cartItem);
+    }
+
     private Optional<List<CartItem>> findCartItemsByShoppingCart(ShoppingCart shoppingCart) {
         return cartItemRepository.findByShoppingCart(shoppingCart);
     }

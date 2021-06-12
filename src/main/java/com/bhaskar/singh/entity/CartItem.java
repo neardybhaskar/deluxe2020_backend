@@ -25,12 +25,12 @@ public class CartItem {
     @Column(name = "grand_total")
     private BigDecimal grandTotal;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "shopping_cart_id")
     @JsonIgnore
     private ShoppingCart shoppingCart;

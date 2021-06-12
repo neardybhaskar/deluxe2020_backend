@@ -23,7 +23,7 @@ public class ShoppingCart {
     @Column(name = "grand_total")
     private BigDecimal grandTotal;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
