@@ -80,8 +80,8 @@ public class ProductController {
             throw new NoSuchElementException();
         }
         try {
-            MultipartHttpServletRequest multipartHttpServletRequest = null;
-            if((request instanceof MultipartHttpServletRequest) == false) {
+            MultipartHttpServletRequest multipartHttpServletRequest;
+            if(!(request instanceof MultipartHttpServletRequest)) {
                 return new ResponseEntity<>("Problems while Uploading", HttpStatus.BAD_REQUEST);
             }
 
@@ -93,7 +93,9 @@ public class ProductController {
             }
 
             String imageName = productId+".jpg";
+            assert fileName != null;
             MultipartFile multipartFile = multipartHttpServletRequest.getFile(fileName);
+            assert multipartFile != null;
             byte[] bytes = multipartFile.getBytes();
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream
                     (new FileOutputStream(new File("src/main/resources/static/images/product/"

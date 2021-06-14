@@ -5,7 +5,6 @@ import com.bhaskar.singh.entity.Product;
 import com.bhaskar.singh.entity.ShoppingCart;
 import com.bhaskar.singh.entity.User;
 import com.bhaskar.singh.repository.CartItemRepository;
-import com.bhaskar.singh.repository.ProductRepository;
 import com.bhaskar.singh.repository.ShoppingCartRepository;
 import com.bhaskar.singh.repository.UserRepository;
 import com.bhaskar.singh.service.CartItemService;
@@ -30,17 +29,13 @@ public class CartItemServiceImpl implements CartItemService {
 
     private final CartItemRepository cartItemRepository;
 
-    private final ProductRepository productRepository;
-
     private final ShoppingCartRepository shoppingCartRepository;
 
     public CartItemServiceImpl(UserRepository userRepository,
                                CartItemRepository cartItemRepository,
-                               ProductRepository productRepository,
                                ShoppingCartRepository shoppingCartRepository) {
         this.userRepository = userRepository;
         this.cartItemRepository = cartItemRepository;
-        this.productRepository = productRepository;
         this.shoppingCartRepository = shoppingCartRepository;
     }
 

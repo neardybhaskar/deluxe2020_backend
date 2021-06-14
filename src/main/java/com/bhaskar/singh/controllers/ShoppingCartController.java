@@ -6,7 +6,6 @@ import com.bhaskar.singh.entity.ShoppingCart;
 import com.bhaskar.singh.entity.User;
 import com.bhaskar.singh.service.CartItemService;
 import com.bhaskar.singh.service.ProductService;
-import com.bhaskar.singh.service.ShoppingCartService;
 import com.bhaskar.singh.service.UserService;
 import javafx.util.Pair;
 import org.springframework.http.HttpStatus;
@@ -29,22 +28,16 @@ public class ShoppingCartController {
 
     private final UserService userService;
 
-    private final ShoppingCartService shoppingCartService;
-
     public ShoppingCartController(CartItemService cartItemService,
                                   ProductService productService,
-                                  UserService userService,
-                                  ShoppingCartService shoppingCartService) {
+                                  UserService userService) {
         this.cartItemService = cartItemService;
         this.productService = productService;
         this.userService = userService;
-        this.shoppingCartService = shoppingCartService;
     }
 
-    @RequestMapping(value = "/cart/add", method = RequestMethod.POST)
-    public ResponseEntity<?> addProductToCart(
-            @RequestBody Map<String, String> map
-            ) {
+    @RequestMapping(value = "/cart/addItem", method = RequestMethod.POST)
+    public ResponseEntity<?> addProductToCart(@RequestBody Map<String, String> map) {
         long productId = Long.parseLong(map.get("productId"));
         int quantity = Integer.parseInt(map.get("quantity"));
         long userId = Long.parseLong(map.get("userId"));
@@ -77,12 +70,11 @@ public class ShoppingCartController {
         ShoppingCart shoppingCart = user.getShoppingCart();
         List<CartItem> cartItemList = shoppingCart.getCartItem();
 
-        Map<Object, Object> objectMap = new HashMap<>();
-        List<Pair> pairList = new ArrayList<>();
+        List<Pair<?,?>> pairList = new ArrayList<>();
 
-        for(CartItem cartItem: cartItemList) {
-            pairList.add(new Pair(cartItem, cartItem.getProduct()));
-        }
+        //Will add cartItem and Products as pair and send in UI for retrieving data
+        cartItemList.forEach(cartItem -> pairList
+                .add(new Pair<>(cartItem, cartItem.getProduct())));
 
         Map<String, Object> cartItemDetails = new HashMap<>();
         cartItemDetails.put("cartItems", pairList);
@@ -93,7 +85,9 @@ public class ShoppingCartController {
     @RequestMapping(value = "/cartItem/delete/{cartItemId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteCartItem(@PathVariable(name = "cartItemId") String cartItemId) {
 
-        Optional<CartItem> cartItemOptional = this.cartItemService.findCartItemById(Long.valueOf(cartItemId));
+        Optional<CartItem> cartItemOptional = this.cartItemService.
+                findCartItemById(Long.valueOf(cartItemId));
+        
         if(!cartItemOptional.isPresent()) {
             throw new NoSuchElementException("No CartElement found with Id: "+cartItemId);
         }
